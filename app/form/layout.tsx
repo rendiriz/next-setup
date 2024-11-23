@@ -9,6 +9,7 @@ export default function Formlayout({
     <>
       <nav className="flex gap-4">
         <Link href={'/form/title'}>Title</Link>
+        <Link href={'/form/description'}>Description</Link>
       </nav>
       <div className="mx-auto max-w-2xl p-4">{children}</div>
     </>
