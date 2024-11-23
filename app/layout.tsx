@@ -1,22 +1,11 @@
 import './globals.css';
 
-import localFont from 'next/font/local';
 import Link from 'next/link';
 
 import { Providers } from '@/components/providers';
+import { geistMono, inter } from '@/lib/fonts';
 
 import type { Metadata } from 'next';
-
-const geistSans = localFont({
-  src: './fonts/GeistVF.woff',
-  variable: '--font-geist-sans',
-  weight: '100 900',
-});
-const geistMono = localFont({
-  src: './fonts/GeistMonoVF.woff',
-  variable: '--font-geist-mono',
-  weight: '100 900',
-});
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -36,7 +25,7 @@ export default function RootLayout({
           async
         />
       </head>
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
+      <body className={`${inter.variable} ${geistMono.variable} antialiased`}>
         <nav className="flex gap-4">
           <Link href={'/'}>Home</Link>
           <Link href={'/todo'}>Todo</Link>

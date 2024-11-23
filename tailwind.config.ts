@@ -1,6 +1,8 @@
 /* eslint-disable @typescript-eslint/no-require-imports */
 import type { Config } from 'tailwindcss';
 
+const defaultTheme = require('tailwindcss/defaultTheme');
+
 export default {
   darkMode: ['class'],
   content: [
@@ -10,6 +12,14 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['var(--font-inter)', ...defaultTheme.fontFamily.sans],
+        serif: [...defaultTheme.fontFamily.serif],
+        mono: ['var(--font-geist-mono)', ...defaultTheme.fontFamily.mono],
+        inter: ['var(--font-inter)'],
+        roboto: ['var(--font-roboto)'],
+        'jakarta-plus-sans': ['var(--font-jakarta-plus-sans)'],
+      },
       colors: {
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
