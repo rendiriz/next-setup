@@ -295,7 +295,7 @@ export const ThemeTest = observer(() => {
 
       <Separator className="my-8" />
 
-      <div>
+      <div className="text-xs">
         Value:
         <pre>{JSON.stringify(theme, null, 2)}</pre>
       </div>
