@@ -30,16 +30,22 @@ const initialValue = {
 export interface StoreType {
   value: Record<string, unknown>;
   isActive: boolean;
+  isEditable: boolean;
+  isRequired: boolean;
 }
 
 export const store = observable<StoreType>({
   value: initialValue,
   isActive: false,
+  isEditable: true,
+  isRequired: false,
 });
 
 export const Demo = observer(() => {
   const value = store.value.get();
   const isActive = store.isActive.get();
+  const isEditable = store.isEditable.get();
+  const isRequired = store.isRequired.get();
 
   return (
     <>
@@ -55,6 +61,8 @@ export const Demo = observer(() => {
       >
         <FormQuestion
           isActive={isActive}
+          isEditable={isEditable}
+          isRequired={isRequired}
           value={value}
           onChangeValue={(value) => store.value.set(value)}
         />
@@ -75,6 +83,34 @@ export const Demo = observer(() => {
             className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
             isActive
+          </label>
+        </div>
+
+        <div className="flex items-center space-x-2">
+          <Checkbox
+            id="isEditable"
+            checked={isEditable}
+            onCheckedChange={() => store.isEditable.toggle()}
+          />
+          <label
+            htmlFor="isEditable"
+            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          >
+            isEditable
+          </label>
+        </div>
+
+        <div className="flex items-center space-x-2">
+          <Checkbox
+            id="isRequired"
+            checked={isRequired}
+            onCheckedChange={() => store.isRequired.toggle()}
+          />
+          <label
+            htmlFor="isRequired"
+            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          >
+            isRequired
           </label>
         </div>
       </div>

@@ -30,16 +30,19 @@ const initialValue = {
 export interface StoreType {
   value: Record<string, unknown>;
   isActive: boolean;
+  isEditable: boolean;
 }
 
 export const store = observable<StoreType>({
   value: initialValue,
   isActive: false,
+  isEditable: true,
 });
 
 export const Demo = observer(() => {
   const value = store.value.get();
   const isActive = store.isActive.get();
+  const isEditable = store.isEditable.get();
 
   return (
     <>
@@ -55,6 +58,7 @@ export const Demo = observer(() => {
       >
         <FormDescription
           isActive={isActive}
+          isEditable={isEditable}
           value={value}
           onChangeValue={(value) => store.value.set(value)}
         />
@@ -75,6 +79,20 @@ export const Demo = observer(() => {
             className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
           >
             isActive
+          </label>
+        </div>
+
+        <div className="flex items-center space-x-2">
+          <Checkbox
+            id="isEditable"
+            checked={isEditable}
+            onCheckedChange={() => store.isEditable.toggle()}
+          />
+          <label
+            htmlFor="isEditable"
+            className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          >
+            isEditable
           </label>
         </div>
       </div>

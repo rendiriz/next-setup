@@ -27,12 +27,14 @@ import { EditorContent, useEditor } from '@tiptap/react';
 interface FormQuestionProps {
   className?: string;
   isActive: boolean;
+  isEditable: boolean;
+  isRequired: boolean;
   value: Record<string, unknown>;
   onChangeValue: ({ value }: Record<string, unknown>) => void;
 }
 
 export const FormQuestion = observer((props: FormQuestionProps) => {
-  const { className, isActive, value, onChangeValue } = props;
+  const { className, isActive, isEditable, isRequired, value, onChangeValue } = props;
   const { isTargetClicked, ref } = useClickDetection();
 
   const editor = useEditor({
@@ -72,6 +74,7 @@ export const FormQuestion = observer((props: FormQuestionProps) => {
         ),
       },
     },
+    editable: isEditable,
     content: value,
     onUpdate: ({ editor }) => {
       onChangeValue(editor.getJSON());
@@ -84,19 +87,22 @@ export const FormQuestion = observer((props: FormQuestionProps) => {
 
   return (
     <div
-      ref={ref}
+      ref={isEditable ? ref : null}
       className={cn(className)}
     >
-      <EditorContent
-        className={cn(isActive && 'bg-gray-50 p-4')}
-        editor={editor}
-      />
+      <div className="flex space-x-2">
+        <EditorContent
+          className={cn(isEditable && 'w-full', isEditable && isActive ? 'bg-gray-50 p-4' : '')}
+          editor={editor}
+        />
+        {!isEditable && isRequired ? <span className="text-red-500">*</span> : null}
+      </div>
 
-      {isActive && (
+      {isEditable && isActive ? (
         <Separator
           className={cn('mb-2 h-[1px]', isTargetClicked ? 'bg-[var(--builder-color)]' : 'bg-border')}
         />
-      )}
+      ) : null}
 
       <ToggleGroup
         type="multiple"

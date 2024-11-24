@@ -28,12 +28,13 @@ import { EditorContent, useEditor } from '@tiptap/react';
 interface FormTitleProps {
   className?: string;
   isActive: boolean;
+  isEditable: boolean;
   value: Record<string, unknown>;
   onChangeValue: ({ value }: Record<string, unknown>) => void;
 }
 
 export const FormTitle = observer((props: FormTitleProps) => {
-  const { className, isActive, value, onChangeValue } = props;
+  const { className, isActive, isEditable, value, onChangeValue } = props;
   const { isTargetClicked, ref } = useClickDetection();
 
   const editor = useEditor({
@@ -72,6 +73,7 @@ export const FormTitle = observer((props: FormTitleProps) => {
         ),
       },
     },
+    editable: isEditable,
     content: value,
     onUpdate: ({ editor }) => {
       onChangeValue(editor.getJSON());
@@ -84,16 +86,16 @@ export const FormTitle = observer((props: FormTitleProps) => {
 
   return (
     <div
-      ref={ref}
+      ref={isEditable ? ref : null}
       className={cn('pb-2', className)}
     >
       <EditorContent editor={editor} />
 
-      {isActive && (
+      {isEditable && isActive ? (
         <Separator
           className={cn('my-2 h-[1px]', isTargetClicked ? 'bg-[var(--builder-color)]' : 'bg-border')}
         />
-      )}
+      ) : null}
 
       <ToggleGroup
         type="multiple"
