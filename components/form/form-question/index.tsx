@@ -15,7 +15,6 @@ import { cn } from '@/lib/utils';
 import { observer } from '@legendapp/state/react';
 import Bold from '@tiptap/extension-bold';
 import Document from '@tiptap/extension-document';
-import Heading from '@tiptap/extension-heading';
 import History from '@tiptap/extension-history';
 import Italic from '@tiptap/extension-italic';
 import Link from '@tiptap/extension-link';
@@ -25,29 +24,24 @@ import Text from '@tiptap/extension-text';
 import Underline from '@tiptap/extension-underline';
 import { EditorContent, useEditor } from '@tiptap/react';
 
-interface FormTitleProps {
+interface FormQuestionProps {
   className?: string;
   isActive: boolean;
   value: Record<string, unknown>;
   onChangeValue: ({ value }: Record<string, unknown>) => void;
 }
 
-export const FormTitle = observer((props: FormTitleProps) => {
+export const FormQuestion = observer((props: FormQuestionProps) => {
   const { className, isActive, value, onChangeValue } = props;
   const { isTargetClicked, ref } = useClickDetection();
 
   const editor = useEditor({
     extensions: [
-      Document.extend({
-        content: 'heading',
-      }),
+      Document,
       Paragraph,
       Text,
-      Heading.configure({
-        levels: [1],
-      }),
       Placeholder.configure({
-        placeholder: 'Form title',
+        placeholder: 'Question',
       }),
       Bold,
       Italic,
@@ -64,11 +58,17 @@ export const FormTitle = observer((props: FormTitleProps) => {
       attributes: {
         class: cn(
           'prose focus:outline-none',
+          'prose-p:m-0',
           'prose-a:text-[hsl(var(--link))]',
           'prose-a:pointer',
           'prose-a:hover:text-[hsl(var(--link-hover))]',
-          'prose-h1:font-[family-name:var(--builder-title-font-family)]',
-          'prose-h1:text-[length:var(--builder-title-font-size)]',
+          'prose-ol:list-decimal prose-ol:my-3 prose-ol:ml-2 prose-ol:mr-4 prose-ol:py-0 prose-ol:px-4',
+          'prose-ul:list-disc prose-ul:my-3 prose-ul:ml-2 prose-ul:mr-4 prose-ul:py-0 prose-ul:px-4',
+          'prose-li:m-0',
+          '[&>ol>li]:marker:text-[hsl(var(--foreground))]',
+          '[&>ul>li]:marker:text-[hsl(var(--foreground))]',
+          'prose-p:font-[family-name:var(--question-font-family)]',
+          'prose-p:text-[length:var(--question-font-size)]',
         ),
       },
     },
@@ -85,13 +85,16 @@ export const FormTitle = observer((props: FormTitleProps) => {
   return (
     <div
       ref={ref}
-      className={cn('pb-2', className)}
+      className={cn(className)}
     >
-      <EditorContent editor={editor} />
+      <EditorContent
+        className={cn(isActive && 'bg-gray-50 p-4')}
+        editor={editor}
+      />
 
       {isActive && (
         <Separator
-          className={cn('my-2 h-[1px]', isTargetClicked ? 'bg-[var(--builder-color)]' : 'bg-border')}
+          className={cn('mb-2 h-[1px]', isTargetClicked ? 'bg-[var(--builder-color)]' : 'bg-border')}
         />
       )}
 

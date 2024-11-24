@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-export default function Formlayout({
+export default function Elementlayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
@@ -8,9 +8,8 @@ export default function Formlayout({
   return (
     <>
       <nav className="flex gap-4">
-        <Link href={'/form/title'}>Title</Link>
-        <Link href={'/form/description'}>Description</Link>
-        <Link href={'/form/question'}>Question</Link>
+        <Link href={'/element/title'}>Title</Link>
+        <Link href={'/element/question'}>Question</Link>
       </nav>
       <div className="mx-auto max-w-2xl p-4">{children}</div>
     </>

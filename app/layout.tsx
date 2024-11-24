@@ -32,6 +32,8 @@ export default function RootLayout({
           <Link href={'/react-query'}>React Query</Link>
           <Link href={'/theme'}>Theme</Link>
           <Link href={'/form'}>Form</Link>
+          <Link href={'/element'}>Element</Link>
+          <Link href={'/builder'}>Builder</Link>
         </nav>
         <Providers>{children}</Providers>
       </body>

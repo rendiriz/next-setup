@@ -5,12 +5,3 @@
   height: 0;
   pointer-events: none;
 }
-
-.tiptap a {
-  color: hsl(var(--link));
-  cursor: pointer;
-}
-
-.tiptap a:hover {
-  color: hsl(var(--link-hover));
-}
