@@ -30,7 +30,7 @@ interface FormQuestionProps {
   isEditable: boolean;
   isRequired: boolean;
   value: Record<string, unknown>;
-  onChangeValue: ({ value }: Record<string, unknown>) => void;
+  onChangeValue: (value: Record<string, unknown>) => void;
 }
 
 export const FormQuestion = observer((props: FormQuestionProps) => {
@@ -38,6 +38,7 @@ export const FormQuestion = observer((props: FormQuestionProps) => {
   const { isTargetClicked, ref } = useClickDetection();
 
   const editor = useEditor({
+    immediatelyRender: true,
     extensions: [
       Document,
       Paragraph,

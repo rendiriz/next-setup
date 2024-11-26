@@ -11,7 +11,7 @@ export default function Elementlayout({
         <Link href={'/element/title'}>Title</Link>
         <Link href={'/element/question'}>Question</Link>
       </nav>
-      <div className="mx-auto max-w-2xl p-4">{children}</div>
+      <div className="mx-auto max-w-3xl p-4">{children}</div>
     </>
   );
 }

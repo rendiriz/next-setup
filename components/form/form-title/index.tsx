@@ -30,7 +30,7 @@ interface FormTitleProps {
   isActive: boolean;
   isEditable: boolean;
   value: Record<string, unknown>;
-  onChangeValue: ({ value }: Record<string, unknown>) => void;
+  onChangeValue: (value: Record<string, unknown>) => void;
 }
 
 export const FormTitle = observer((props: FormTitleProps) => {
@@ -38,6 +38,7 @@ export const FormTitle = observer((props: FormTitleProps) => {
   const { isTargetClicked, ref } = useClickDetection();
 
   const editor = useEditor({
+    immediatelyRender: true,
     extensions: [
       Document.extend({
         content: 'heading',

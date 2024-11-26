@@ -28,11 +28,12 @@ export default function RootLayout({
       <body className={`${inter.variable} ${geistMono.variable} antialiased`}>
         <nav className="flex gap-4">
           <Link href={'/'}>Home</Link>
-          <Link href={'/todo'}>Todo</Link>
-          <Link href={'/react-query'}>React Query</Link>
+          {/* <Link href={'/todo'}>Todo</Link>
+          <Link href={'/react-query'}>React Query</Link> */}
           <Link href={'/theme'}>Theme</Link>
           <Link href={'/form'}>Form</Link>
           <Link href={'/element'}>Element</Link>
+          <Link href={'/dnd'}>Dnd</Link>
           <Link href={'/builder'}>Builder</Link>
         </nav>
         <Providers>{children}</Providers>

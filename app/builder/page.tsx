@@ -1,10 +1,5 @@
-import { FormBuilder } from './_components/form-builder';
-import { SettingProvider } from './_components/setting-provider';
+import { Demo } from './_components/demo';
 
 export default function BuilderPage() {
-  return (
-    <SettingProvider>
-      <FormBuilder />
-    </SettingProvider>
-  );
+  return <Demo />;
 }

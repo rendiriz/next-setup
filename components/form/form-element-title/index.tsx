@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 'use client';
 
 import { FormDescription } from '@/components/form/form-description';
@@ -8,77 +9,138 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
 
-import { observer } from '@legendapp/state/react';
-import { EllipsisVertical } from 'lucide-react';
+import { Check, Copy, EllipsisVertical, Trash, X } from 'lucide-react';
 
 interface FormElementTitleProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  data?: any; // TODO: types
-  isMain?: boolean;
-  rounded?: string;
-  isActive?: boolean;
   className?: string;
+  isMain: boolean;
+  isActive: boolean;
+  isEditable: boolean;
+  value: any;
+  onChangeValue: (value: any) => void;
+  // rounded?: string;
   onElementClick?: (id: string) => void;
+  showDescription: boolean;
+  onCopy: (id: string) => void;
+  onDelete: (id: string) => void;
+  onChangeShowDescription: (showDescription: boolean) => void;
 }
 
-export const FormElementTitle = observer(
-  ({ data, isMain = false, rounded = '', isActive = false, onElementClick }: FormElementTitleProps) => {
-    return (
-      <Card
-        onClick={() => onElementClick?.(data.id)}
-        className={cn(isMain && 'border-t-[var(--builder-color)]', rounded, isActive && 'shadow-lg')}
-      >
-        <CardContent className="relative flex p-0">
-          {isMain && (
-            <div
-              className={cn(
-                'h-2.5 w-[calc(100%+2px)] bg-[var(--builder-color)] text-white',
-                rounded,
-                isMain && 'absolute -left-[1px] -top-[1px]',
-              )}
-            ></div>
-          )}
-          <div className={cn(isMain ? 'pb-6 pt-8' : 'py-6', 'w-full')}>
-            <div className="flex gap-4 pl-6 pr-4">
-              <FormTitle
-                isDemo={false}
-                className="grow"
-                isActive={isActive}
-              />
+export const FormElementTitle = (props: FormElementTitleProps) => {
+  const {
+    isMain = false,
+    isActive,
+    isEditable,
+    value,
+    onChangeValue,
+    onElementClick,
+    showDescription,
+    onCopy,
+    onDelete,
+    onChangeShowDescription,
+  } = props;
 
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    variant="ghost"
-                    size="icon"
-                  >
-                    <EllipsisVertical />
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent
-                  className="w-56"
-                  align="start"
+  return (
+    <Card
+      onClick={() => onElementClick?.(value.id)}
+      className={cn(
+        isMain && 'rounded-t-lg border-t-[var(--builder-color)]',
+        // rounded,
+        isActive && 'shadow-lg',
+      )}
+    >
+      <CardContent className="relative flex p-0">
+        {isMain && (
+          <div
+            className={cn(
+              'h-2.5 w-[calc(100%+2px)] bg-[var(--builder-color)] text-white',
+              // rounded,
+              isMain && 'absolute -left-[1px] -top-[1px] rounded-t-lg',
+            )}
+          ></div>
+        )}
+        <div className={cn(isMain ? 'pb-6 pt-8' : 'py-6', 'flex w-full flex-col space-y-2')}>
+          <div className="flex space-x-4 pl-6 pr-4">
+            <FormTitle
+              className="grow"
+              isActive={isActive}
+              isEditable={isEditable}
+              value={value.title as Record<string, unknown>}
+              onChangeValue={(title: Record<string, unknown>) => {
+                onChangeValue({ ...value, title });
+              }}
+            />
+
+            {isEditable && isActive && (
+              <div className="flex">
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => {
+                    onCopy(value.id);
+                  }}
                 >
-                  <DropdownMenuItem>
-                    <span>Delete section</span>
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-            <div className="flex px-6">
+                  <Copy />
+                </Button>
+
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => {
+                    onDelete(value.id);
+                  }}
+                >
+                  <Trash />
+                </Button>
+
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                    >
+                      <EllipsisVertical />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent
+                    className="w-56"
+                    align="start"
+                  >
+                    <DropdownMenuLabel>Show</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem
+                      onClick={() => onChangeShowDescription(!showDescription)}
+                      className="cursor-pointer"
+                    >
+                      {showDescription ? <Check /> : <X />}
+                      <span>Description</span>
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            )}
+          </div>
+          <div className="flex px-6">
+            {showDescription && (
               <FormDescription
-                isDemo={false}
                 className="grow"
                 isActive={isActive}
+                isEditable={isEditable}
+                value={value.description as Record<string, unknown>}
+                onChangeValue={(description: Record<string, unknown>) => {
+                  onChangeValue({ ...value, description });
+                }}
               />
-            </div>
+            )}
           </div>
-        </CardContent>
-      </Card>
-    );
-  },
-);
+        </div>
+      </CardContent>
+    </Card>
+  );
+};

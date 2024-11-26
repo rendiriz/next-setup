@@ -34,7 +34,7 @@ interface FormDescriptionProps {
   isActive: boolean;
   isEditable: boolean;
   value: Record<string, unknown>;
-  onChangeValue: ({ value }: Record<string, unknown>) => void;
+  onChangeValue: (value: Record<string, unknown>) => void;
 }
 
 export const FormDescription = observer((props: FormDescriptionProps) => {
@@ -42,6 +42,7 @@ export const FormDescription = observer((props: FormDescriptionProps) => {
   const { isTargetClicked, ref } = useClickDetection();
 
   const editor = useEditor({
+    immediatelyRender: true,
     extensions: [
       Document,
       Paragraph,
