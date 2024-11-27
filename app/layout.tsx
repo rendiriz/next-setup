@@ -1,7 +1,6 @@
 import './globals.css';
 
-import Link from 'next/link';
-
+import { Navbar } from '@/components/navbar';
 import { Providers } from '@/components/providers';
 import { geistMono, inter } from '@/lib/fonts';
 
@@ -19,23 +18,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      {/* <head>
+      <head>
         <script
           src="https://unpkg.com/react-scan/dist/auto.global.js"
           async
         />
-      </head> */}
+      </head>
       <body className={`${inter.variable} ${geistMono.variable} antialiased`}>
-        <nav className="flex gap-4">
-          <Link href={'/'}>Home</Link>
-          {/* <Link href={'/todo'}>Todo</Link>
-          <Link href={'/react-query'}>React Query</Link> */}
-          <Link href={'/theme'}>Theme</Link>
-          <Link href={'/form'}>Form</Link>
-          <Link href={'/element'}>Element</Link>
-          <Link href={'/dnd'}>Dnd</Link>
-          <Link href={'/builder'}>Builder</Link>
-        </nav>
+        <Navbar />
         <Providers>{children}</Providers>
       </body>
     </html>
